@@ -113,7 +113,7 @@
       });
 
 
-    };
+    }
 
     
 
@@ -127,7 +127,7 @@
 
         for(const filter of filters) {
           if(!book.details[filter]) {
-            bookId.push(book.id)
+            bookId.push(book.id);
           }
         }
 
@@ -166,4 +166,5 @@
   }
 
   const app = new BooksList();
+  console.log(app);
 }
