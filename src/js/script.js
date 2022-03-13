@@ -10,11 +10,10 @@
     containerOf: {
       booklist: '.books-list',
       filters: '.filters',
-      rating: '.book__rating'
     },
 
     element: {
-      bookImage: '.book__image',
+      bookImage: 'book__image',
       dataId: 'data-id',
     },
 
@@ -35,9 +34,9 @@
   const filters = [];
 
 
-  //const filtersForm = document.querySelector(select.containerOf.filters);
+  const filtersForm = document.querySelector(select.containerOf.filters);
 
-  console.log(filters);
+  console.log(filtersForm);
 
 
   const render = function(){
@@ -79,7 +78,7 @@
       event.preventDefault();
 
       const book = event.target.offsetParent;
-      if(book.classList.contains('book__image')){
+      if(book.classList.contains(select.element.bookImage)){
         book.classList.toggle(select.class.favorite);
         const dataId = book.getAttribute(select.element.dataId);
         //console.log(dataId);
@@ -114,64 +113,55 @@
   };
 
   const filterBooks = function() {
-    //const thisBook = this;
-
-    //thisBook.images = thisBook.container.querySelector(select.element.bookImage);
-
+  
     const books = dataSource.books;
     const bookId = [];
 
 
     for(let book of books){
-      let shouldBeHidden = false;
+      
 
       for(const filter of filters) {
         if(!book.details[filter]) {
-          shouldBeHidden = true;
-          
           bookId.push(book.id)
-          
-
-          break;
         }
-        
-
       }
+
       if(bookId.includes(book.id)){
-        //console.log(bookId);
         const bookImg = document.querySelector('[data-id="' + book.id + '"]');
-        console.log(bookImg);
         bookImg.classList.add(select.class.hidden);
       } else if (!bookId.includes(book.id)){
         const bookImg = document.querySelector('[data-id="' + book.id + '"]');
-        console.log(bookImg);
         bookImg.classList.remove(select.class.hidden);
       }
-      
     }
-    
   };
 
   const determineRatingBgc = function(rating){
+    let ratingBgc = '';    
     if(rating < 6){
       ratingBgc = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%)';
+      //console.log(ratingBgc);
+
     } else if(rating > 6 && rating <= 8){
       ratingBgc = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
+      //console.log(ratingBgc);
 
     } else if (rating > 8 && rating <= 9){
       ratingBgc = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
- 
+      //console.log(ratingBgc);
+
     } else if(rating > 9){
       ratingBgc = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
+      //console.log(ratingBgc);
+
     }
     return ratingBgc;
 
-  }
-
-  
+  };
 
   render();
-  determineRatingBgc();
   initActions();
+  
 
 }
