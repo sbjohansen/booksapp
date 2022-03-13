@@ -29,10 +29,8 @@
   const filters = [];
 
   class BooksList {
-    constructor(id) {
+    constructor() {
       const thisBook = this;
-
-      thisBook.id = id;
 
       thisBook.initData();
       thisBook.getElements();
