@@ -10,6 +10,7 @@
     containerOf: {
       booklist: '.books-list',
       filters: '.filters',
+      rating: '.book__rating'
     },
 
     element: {
@@ -27,20 +28,24 @@
   };
 
   const templates = {
-    bookProduct: Handlebars.compile(document.querySelector(select.templateOf.bookProduct).innerHTML)
+    bookProduct: Handlebars.compile(document.querySelector(select.templateOf.bookProduct).innerHTML),
   };
 
   const favoriteBooks = [];
   const filters = [];
 
-  const filtersForm = document.querySelector(select.containerOf.filters);
+
+  //const filtersForm = document.querySelector(select.containerOf.filters);
 
   console.log(filters);
 
 
   const render = function(){
+    
     for(let book of dataSource.books) { 
       const thisBook = this;
+      book.ratingBgc = determineRatingBgc(book.rating);
+      book.ratingWidth = book.rating * 10;
 
       /* generate HTML based on template */
       const generatedHTML = templates.bookProduct(book);
@@ -50,6 +55,9 @@
       const bookContainer = document.querySelector(select.containerOf.booklist);
       /* add element to menu */
       bookContainer.appendChild(thisBook.bookParams);
+      console.log(thisBook.ratingBgc);
+
+
     }
   };
 
@@ -144,9 +152,26 @@
     
   };
 
+  const determineRatingBgc = function(rating){
+    if(rating < 6){
+      ratingBgc = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%)';
+    } else if(rating > 6 && rating <= 8){
+      ratingBgc = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
+
+    } else if (rating > 8 && rating <= 9){
+      ratingBgc = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
+ 
+    } else if(rating > 9){
+      ratingBgc = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
+    }
+    return ratingBgc;
+
+  }
+
   
 
   render();
+  determineRatingBgc();
   initActions();
 
 }
